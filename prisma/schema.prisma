@@ -9,3 +9,98 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            Int           @id @default(autoincrement())
+  email         String        @unique @db.VarChar(100)
+  password      String        @db.VarChar(100)
+  username      String        @db.VarChar(100)
+  gender_id     Int
+  policy_agreed Boolean       @default(true)
+  created_at    DateTime?     @default(now())
+  updated_at    DateTime?     @default(now())
+  gender        Gender        @relation(fields: [gender_id], references: [id])
+  ProductCart   ProductCart[]
+
+  @@map("users")
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique @db.VarChar(100)
+  image_url   String    @db.VarChar(100)
+  description String?   @db.VarChar(100)
+  price       Decimal
+  size_id     Int
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  size        Size      @relation(fields: [size_id], references: [id])
+
+  ProductAddOption ProductAddOption[]
+  ProductCart      ProductCart[]
+  @@map("products")
+}
+
+model ProductAddOption {
+  id            Int       @id @default(autoincrement())
+  product_id    Int
+  add_option_id Int
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @default(now())
+  product       Product   @relation(fields: [product_id], references: [id])
+  add_option    AddOption @relation(fields: [add_option_id], references: [id])
+
+  @@map("products_add_options")
+}
+
+model AddOption {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique @db.VarChar(100)
+  price      Decimal
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  ProductAddOption ProductAddOption[]
+  ProductCart      ProductCart[]
+  @@map("add_options")
+}
+
+model Size {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique @db.VarChar(100)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  Product Product[]
+  @@map("sizes")
+}
+
+model Gender {
+  id          Int       @id @default(autoincrement())
+  gender_type String    @unique @db.VarChar(100)
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  gender      Gender[]  @relation("GenderToGender")
+
+  User     User[]
+  Gender   Gender? @relation("GenderToGender", fields: [genderId], references: [id])
+  genderId Int?
+  @@map("genders")
+}
+
+model ProductCart {
+  id            Int       @id @default(autoincrement())
+  user_id       Int
+  product_id    Int
+  add_option_id Int
+  quantity      Int
+  totalprice    Decimal
+  order_status  String    @db.VarChar(100)
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @default(now())
+  users         User      @relation(fields: [user_id], references: [id])
+  products      Product   @relation(fields: [product_id], references: [id])
+  add_option    AddOption @relation(fields: [add_option_id], references: [id])
+
+  @@map("product_carts")
+}
