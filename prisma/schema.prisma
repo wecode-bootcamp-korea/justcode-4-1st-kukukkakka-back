@@ -50,7 +50,7 @@ model ProductAddOption {
   product       Product   @relation(fields: [product_id], references: [id])
   add_option    AddOption @relation(fields: [add_option_id], references: [id])
 
-  @@map("products_add_options")
+  @@map("product_add_options")
 }
 
 model AddOption {
@@ -80,11 +80,8 @@ model Gender {
   gender_type String    @unique @db.VarChar(100)
   created_at  DateTime? @default(now())
   updated_at  DateTime? @default(now())
-  gender      Gender[]  @relation("GenderToGender")
 
   User     User[]
-  Gender   Gender? @relation("GenderToGender", fields: [genderId], references: [id])
-  genderId Int?
   @@map("genders")
 }
 
