@@ -20,7 +20,7 @@ const PORT = process.env.PORT;
 
 const start = async () => {
   try {
-    server.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
+    server.listen(8000, () => console.log(`Server is listening on 8000`));
   } catch (err) {
     console.error(err);
     await prisma.$disconnect();
