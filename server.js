@@ -3,12 +3,14 @@ const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const routes = require("./routes");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
 app.use(routes);
+app.use(cors);
 
 app.get("/ping", (req, res) => {
   res.json({ message: "pong" });
