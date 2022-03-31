@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const getProductList = async () => {
   const product = await prisma.$queryRaw`
     SELECT p.id, p.name, p.description, p.image_url, p.price,
-    s.name
+    s.name as sizename
     FROM products as p
     LEFT JOIN sizes as s
     ON p.size_id = s.id

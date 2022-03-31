@@ -8,7 +8,8 @@ const dotenv = require("dotenv");
 // const prisma = new PrismaClient();
 const app = express();
 
-app.use(cors);
+// app.use(cors);
+app.use(cors());
 app.use(express.json());
 app.use(routes);
 
