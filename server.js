@@ -1,10 +1,10 @@
 const http = require("http");
 const express = require("express");
-// const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client");
 const routes = require("./routes");
 const dotenv = require("dotenv");
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
