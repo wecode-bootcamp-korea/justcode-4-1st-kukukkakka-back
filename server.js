@@ -1,10 +1,10 @@
 const http = require("http");
 const express = require("express");
-const { PrismaClient } = require("@prisma/client");
+// const { PrismaClient } = require("@prisma/client");
 const routes = require("./routes");
 const dotenv = require("dotenv");
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
@@ -16,16 +16,11 @@ app.get("/ping", (req, res) => {
 
 const server = http.createServer(app);
 dotenv.config();
-// const PORT = process.env.PORT;
-const PORT = 8000;
+const PORT = process.env.PORT;
 
 const start = async () => {
   try {
-<<<<<<< HEAD
-    server.listen(8000, () => console.log(`Server is listening on ${8000}`));
-=======
-    server.listen(8000, () => console.log(`Server is listening on ${PORT}`));
->>>>>>> develop
+    server.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
   } catch (err) {
     console.error(err);
     await prisma.$disconnect();
