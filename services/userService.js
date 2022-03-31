@@ -1,8 +1,12 @@
 const userDao = require("../models/userDao");
 
-const signup = () => {
+const checkEmailValid = async () => {
   try {
-  } catch (err) {}
+    prisma;
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err.message });
+  }
 };
 
 module.exports = { signup };

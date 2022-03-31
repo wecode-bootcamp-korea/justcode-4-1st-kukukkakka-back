@@ -1,12 +1,15 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const signup = () => {
+const checkUserByEmail = async (email) => {
   try {
-      return await prisma.$queryRaw`
-        SELECT FROM 
-      `
-  } catch (err) {}
+    return await prisma.$queryRaw`
+      SELECT email from users where email=${email}
+    `;
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err.message });
+  }
 };
 
-module.exports = { signup };
+module.exports = { checkUserByEmail };
