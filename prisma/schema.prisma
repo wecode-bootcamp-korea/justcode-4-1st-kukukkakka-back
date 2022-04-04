@@ -101,3 +101,10 @@ model ProductCart {
 
   @@map("product_carts")
 }
+
+model Keyword {
+  id      Int    @id @default(autoincrement())
+  keyword String @db.VarChar(100)
+
+  @@map("keywords")
+}
