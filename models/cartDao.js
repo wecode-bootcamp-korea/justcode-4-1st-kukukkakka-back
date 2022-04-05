@@ -15,7 +15,7 @@ const createUserCart = async (
   (${userId}, ${productId}, ${addOptionId}, ${quantity}, ${totalPrice}, "주문 전")`;
 };
 
-const getUserCart = async () => {
+const getUserCart = async (id) => {
   return await prisma.$queryRaw`
   SELECT C.user_id As userId,  
   P.name As productName, 
@@ -26,12 +26,13 @@ const getUserCart = async () => {
   json_arrayagg(A.name) As addOptionName, 
   json_arrayagg(A.price) As addOptionPrice, 
   C.order_status As orderStatus 
-
+  
   FROM product_carts C 
   JOIN products P 
   ON P.id = C.product_id 
   JOIN add_options A 
-  ON A.id = C.add_option_id 
+  ON A.id = C.add_option_id
+  WHERE C.user_id = ${id}
   GROUP BY C.product_id, C.user_id, C.quantity, C.totalprice, C.order_status;`;
 };
 
