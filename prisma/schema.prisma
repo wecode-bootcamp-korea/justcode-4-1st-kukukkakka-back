@@ -16,7 +16,7 @@ model User {
   password      String        @db.VarChar(100)
   username      String        @db.VarChar(100)
   gender_id     Int
-  policy_agreed Boolean       @default(true)
+  policy_agreed Boolean       @default(true) 
   created_at    DateTime?     @default(now())
   updated_at    DateTime?     @default(now())
   gender        Gender        @relation(fields: [gender_id], references: [id])
