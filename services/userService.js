@@ -40,6 +40,7 @@ const signup = async (email, password, username, policy_agreed, gender_id) => {
     gender_id
   );
   return createUser;
+  console.log(createUser);
 };
 
 const login = async (email, password) => {
