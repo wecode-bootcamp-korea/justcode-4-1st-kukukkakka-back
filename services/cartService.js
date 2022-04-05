@@ -1,17 +1,27 @@
 const cartDao = require("../models/cartDao");
 
-const userCart = async (
+const createCart = async (
   userId,
   productId,
   addOptionId,
   quantity,
-  totalprice
+  totalPrice
 ) => {
-  const createdCarts = await cartDao.createCarts(
+  const userCart = await cartDao.createUserCart(
     userId,
     productId,
     addOptionId,
     quantity,
-    totalprice
+    totalPrice
   );
+
+  console.log("create api - cartService에서 Dao로 주는 파라미터 :", userCart);
 };
+
+const getCart = async () => {
+  const userCart = await cartDao.getUserCart();
+
+  console.log("read api - cartService에서 Dao로 주는 파라미터 :", userCart);
+};
+
+module.exports = { createCart, getCart };
