@@ -63,7 +63,6 @@ const login = async (req, res) => {
       token,
     });
   } catch (err) {
-    console.log(err);
     res.status(err.statusCode || 500).json({ message: err.message });
   }
 };

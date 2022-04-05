@@ -50,7 +50,6 @@ const login = async (email, password) => {
     throw error;
   }
   const isCorrect = bcrypt.compareSync(password, user[0].password);
-  console.log(isCorrect);
 
   if (!isCorrect) {
     const error = new Error("INVALID_USER");
