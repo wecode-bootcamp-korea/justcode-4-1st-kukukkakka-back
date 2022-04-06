@@ -574,8 +574,5 @@ FodyWeavers.xsd
 
 data/
 .env
-<<<<<<< HEAD
 database/data/
-=======
->>>>>>> develop
 prisma/migrations/
