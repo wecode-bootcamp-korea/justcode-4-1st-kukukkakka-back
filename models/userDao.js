@@ -21,7 +21,7 @@ const createUser = async (
 
 const checkUser = async (email, password) => {
   return await prisma.$queryRaw`
-    SELECT id, password from users where email = ${email}
+    SELECT id, email, password from users where email = ${email}
   `;
 };
 
