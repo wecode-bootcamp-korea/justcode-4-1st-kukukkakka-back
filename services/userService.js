@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const signup = async (email, password, username, policyAgreed, genderId) => {
   const user = await userDao.checkDuplicateEmail(email);
+  console.log("user : ", user);
   if (user.length !== 0) {
     const error = new Error("EXSITING_USER");
     error.statusCode = 400;
@@ -62,4 +63,14 @@ const login = async (email, password) => {
   return token;
 };
 
-module.exports = { signup, login };
+const duplicateCheck = async (email) => {
+  const userCheck = await userDao.checkDuplicateEmail(email);
+  if (userCheck.length !== 0) {
+    const error = new Error("EXSITING_USER");
+    error.statusCode = 400;
+    throw error;
+  }
+  return userCheck;
+};
+
+module.exports = { signup, login, duplicateCheck };
