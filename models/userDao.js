@@ -11,17 +11,17 @@ const createUser = async (
   email,
   encryptedPassword,
   username,
-  policy_agreed,
-  gender_id
+  policyAgreed,
+  genderId
 ) => {
   return await prisma.$queryRaw`
-    INSERT INTO users (email, password, username, policy_agreed, gender_id) VALUES (${email}, ${encryptedPassword}, ${username}, ${policy_agreed}, ${gender_id})
+    INSERT INTO users (email, password, username, policy_agreed, gender_id) VALUES (${email}, ${encryptedPassword}, ${username}, ${policyAgreed}, ${genderId})
     `;
 };
 
 const checkUser = async (email, password) => {
   return await prisma.$queryRaw`
-    SELECT id, password from users where email = ${email}
+    SELECT id, email, password from users where email = ${email}
   `;
 };
 

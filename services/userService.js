@@ -2,7 +2,7 @@ const userDao = require("../models/userDao");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const signup = async (email, password, username, policy_agreed, gender_id) => {
+const signup = async (email, password, username, policyAgreed, genderId) => {
   const user = await userDao.checkDuplicateEmail(email);
   if (user.length !== 0) {
     const error = new Error("EXSITING_USER");
@@ -25,7 +25,7 @@ const signup = async (email, password, username, policy_agreed, gender_id) => {
     throw error;
   }
 
-  if (policy_agreed !== true) {
+  if (policyAgreed !== true) {
     const error = new Error("POLICY_IS_NOT_AGREED");
     error.statusCode = 400;
     throw error;
@@ -36,11 +36,10 @@ const signup = async (email, password, username, policy_agreed, gender_id) => {
     email,
     encryptedPassword,
     username,
-    policy_agreed,
-    gender_id
+    policyAgreed,
+    genderId
   );
   return createUser;
-  console.log(createUser);
 };
 
 const login = async (email, password) => {
@@ -51,7 +50,6 @@ const login = async (email, password) => {
     throw error;
   }
   const isCorrect = bcrypt.compareSync(password, user[0].password);
-
   if (!isCorrect) {
     const error = new Error("INVALID_USER");
     error.statusCode = 400;
@@ -59,8 +57,8 @@ const login = async (email, password) => {
   }
 
   console.log("userId :", JSON.stringify(user[0].id));
-
   const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY);
+
   return token;
 };
 
