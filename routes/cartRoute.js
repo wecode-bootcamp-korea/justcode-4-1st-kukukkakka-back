@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const authorizedUser = require("../middlewares/authorization");
-const cartController = require("../controllers/cartController");
+const productController = require("../controllers/productController");
 
-router.use(authorizedUser.getUserIdByVerifyToken);
+const userController = require("../controllers/userController");
 
-router.post("", cartController.validCartForm, cartController.createCart);
-router.get("", cartController.getCart);
-// router.get("", cartController);
+router.post("/signup", userController.signup);
 
 module.exports = router;
