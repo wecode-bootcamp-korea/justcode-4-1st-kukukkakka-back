@@ -2,7 +2,7 @@ const userService = require("../services/userService");
 
 const signup = async (req, res) => {
   try {
-    const { email, password, username, policy_agreed, gender_id } = req.body;
+    const { email, password, username, policyAgreed, genderId } = req.body;
 
     if (!email) {
       const error = new Error("KEY ERROR : NO_EMAIL");
@@ -22,13 +22,13 @@ const signup = async (req, res) => {
       throw error;
     }
 
-    if (!policy_agreed) {
+    if (!policyAgreed) {
       const error = new Error("KEY ERROR : NO_POLICY_AGREED");
       error.statusCode = 400;
       throw error;
     }
 
-    if (!gender_id) {
+    if (!genderId) {
       const error = new Error("KEY ERROR : NO_GENDER_ID");
       error.statusCode = 400;
       throw error;
@@ -38,8 +38,8 @@ const signup = async (req, res) => {
       email,
       password,
       username,
-      policy_agreed,
-      gender_id
+      policyAgreed,
+      genderId
     );
     return res.status(201).json({ message: "SIGNUP_SUCCESS" });
   } catch (err) {
