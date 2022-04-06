@@ -9,12 +9,11 @@ const getProductList = async () => {
 };
 
 const getProductDetail = async (product_id) => {
-    try{
-    return await productDao.getDetailList(product_id); 
-    }
-    catch (error) {
-    console.log(error); 
- }
-}
+  try {
+    return await productDao.getDetailList(product_id);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-module.exports = { getProductList, getProductDetail }
+module.exports = { getProductList, getProductDetail };
