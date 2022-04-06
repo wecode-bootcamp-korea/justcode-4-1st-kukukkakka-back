@@ -55,10 +55,7 @@ const login = async (email, password) => {
     error.statusCode = 400;
     throw error;
   }
-
-  console.log("userId :", JSON.stringify(user[0].id));
-  const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY);
-
+  const token = jwt.sign({ userId: user[0].id }, process.env.SECRET_KEY);
   return token;
 };
 
