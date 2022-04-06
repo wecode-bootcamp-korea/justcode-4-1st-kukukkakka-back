@@ -36,4 +36,19 @@ const getCart = async (userId) => {
   }
 };
 
-module.exports = { createCart, getCart };
+const updateCart = async (userId, productId, quantity, totalPrice) => {
+  try {
+    const userCart = await cartDao.updateUserCart(
+      userId,
+      productId,
+      quantity,
+      totalPrice
+    );
+
+    return userCart;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { createCart, getCart, updateCart };

@@ -62,4 +62,23 @@ const getCart = async (req, res) => {
   }
 };
 
-module.exports = { validCartForm, createCart, getCart };
+const updateCart = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { productId, quantity, totalPrice } = req.body;
+
+    const userCart = await cartService.updateCart(
+      userId,
+      productId,
+      quantity,
+      totalPrice
+    );
+
+    return res.status(201).json({ message: "UPDATE TO CART SUCCESS" });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = { validCartForm, createCart, getCart, updateCart };
