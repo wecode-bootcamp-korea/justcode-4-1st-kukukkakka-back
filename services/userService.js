@@ -31,7 +31,6 @@ const signup = async (email, password, username, policy_agreed, gender_id) => {
     throw error;
   }
   const encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync());
-  console.log(encryptedPassword);
   const createUser = await userDao.createUser(
     email,
     encryptedPassword,
@@ -40,7 +39,6 @@ const signup = async (email, password, username, policy_agreed, gender_id) => {
     gender_id
   );
   return createUser;
-  console.log(createUser);
 };
 
 const login = async (email, password) => {
@@ -51,14 +49,12 @@ const login = async (email, password) => {
     throw error;
   }
   const isCorrect = bcrypt.compareSync(password, user[0].password);
-
   if (!isCorrect) {
     const error = new Error("INVALID_USER");
     error.statusCode = 400;
     throw error;
   }
-
-  const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY);
+  const token = jwt.sign({ userId: user[0].id }, process.env.SECRET_KEY);
   return token;
 };
 
