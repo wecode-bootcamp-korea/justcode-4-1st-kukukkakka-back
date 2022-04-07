@@ -66,4 +66,23 @@ const login = async (req, res) => {
     res.status(err.statusCode || 500).json({ message: err.message });
   }
 };
-module.exports = { signup, login };
+
+const duplicateCheck = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      const error = new Error("KEY_ERROR");
+      error.status = 400;
+      throw error;
+    }
+
+    const checkResult = await userService.duplicateCheck(email);
+    return res.status(201).json({
+      message: "NEW_USER",
+    });
+  } catch (err) {
+    res.status(err.statusCode || 500).json({ message: err.message });
+  }
+};
+
+module.exports = { signup, login, duplicateCheck };
