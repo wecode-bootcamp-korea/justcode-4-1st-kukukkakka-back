@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 const getUserIdByVerifyToken = async (req, res, next) => {
   const token = req.headers.token;
 
-  console.log(token);
-
   if (token) {
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {

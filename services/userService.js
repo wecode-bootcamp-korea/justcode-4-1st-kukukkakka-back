@@ -31,7 +31,7 @@ const signup = async (email, password, username, policyAgreed, genderId) => {
     throw error;
   }
   const encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync());
-  console.log(encryptedPassword);
+  // console.log(encryptedPassword);
   const createUser = await userDao.createUser(
     email,
     encryptedPassword,

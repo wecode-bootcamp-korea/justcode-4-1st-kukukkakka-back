@@ -8,17 +8,13 @@ const createCart = async (
   totalPrice
 ) => {
   try {
-    const userCart = await cartDao.createUserCart(
+    return await cartDao.createUserCart(
       userId,
       productId,
       addOptionId,
       quantity,
       totalPrice
     );
-
-    // console.log("create api - 서비스에서 Dao로 주는 파라미터 :", userCart);
-
-    return userCart;
   } catch (err) {
     console.log(err);
   }
@@ -26,11 +22,7 @@ const createCart = async (
 
 const getCart = async (userId) => {
   try {
-    const userCart = await cartDao.getUserCart(userId);
-
-    // console.log("read api - 서비스에서 Dao로 주는 파라미터 :", userCart);
-
-    return userCart;
+    return await cartDao.getUserCart(userId);
   } catch (err) {
     console.log(err);
   }
@@ -38,17 +30,42 @@ const getCart = async (userId) => {
 
 const updateCart = async (userId, productId, quantity, totalPrice) => {
   try {
-    const userCart = await cartDao.updateUserCart(
+    return await cartDao.updateUserCart(
       userId,
       productId,
       quantity,
       totalPrice
     );
-
-    return userCart;
   } catch (err) {
     console.log(err);
   }
 };
 
-module.exports = { createCart, getCart, updateCart };
+const deleteCart = async (userId, productId) => {
+  try {
+    return await cartDao.deleteUserCart(userId, productId);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateAddOption = async (userId, productId, addOptionId, totalPrice) => {
+  try {
+    return await cartDao.updateUserAddOption(
+      userId,
+      productId,
+      addOptionId,
+      totalPrice
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = {
+  createCart,
+  getCart,
+  updateCart,
+  deleteCart,
+  updateAddOption,
+};
