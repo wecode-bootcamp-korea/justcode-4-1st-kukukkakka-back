@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 
 const signup = async (email, password, username, policyAgreed, genderId) => {
   const user = await userDao.checkDuplicateEmail(email);
-  console.log("user : ", user);
   if (user.length !== 0) {
     const error = new Error("EXSITING_USER");
     error.statusCode = 400;
@@ -57,7 +56,6 @@ const login = async (email, password) => {
     throw error;
   }
 
-  console.log("userId :", JSON.stringify(user[0].id));
   const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY);
 
   return token;

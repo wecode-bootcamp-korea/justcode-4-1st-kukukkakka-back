@@ -77,7 +77,6 @@ const duplicateCheck = async (req, res) => {
     }
 
     const checkResult = await userService.duplicateCheck(email);
-    console.log(checkResult);
     return res.status(201).json({
       message: "NEW_USER",
     });
