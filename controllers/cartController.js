@@ -38,7 +38,7 @@ const createCart = async (req, res) => {
       totalPrice
     );
 
-    console.log("create api - 컨트롤러에서 서비스로 주는 파라미터 :", userCart);
+    // console.log("create api - 컨트롤러에서 서비스로 주는 파라미터 :", userCart);
 
     return res.status(201).json({ message: "ADD TO CART SUCCESS" });
   } catch (err) {
@@ -53,7 +53,7 @@ const getCart = async (req, res) => {
     console.log(userId);
     const userCart = await cartService.getCart(userId);
 
-    console.log("read api - 컨트롤러에서 서비스로 주는 파라미터 :", userCart);
+    // console.log("read api - 컨트롤러에서 서비스로 주는 파라미터 :", userCart);
 
     return res.status(201).json({ userCart });
   } catch (err) {
@@ -62,4 +62,23 @@ const getCart = async (req, res) => {
   }
 };
 
-module.exports = { validCartForm, createCart, getCart };
+const updateCart = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { productId, quantity, totalPrice } = req.body;
+
+    const userCart = await cartService.updateCart(
+      userId,
+      productId,
+      quantity,
+      totalPrice
+    );
+
+    return res.status(201).json({ message: "UPDATE TO CART SUCCESS" });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = { validCartForm, createCart, getCart, updateCart };

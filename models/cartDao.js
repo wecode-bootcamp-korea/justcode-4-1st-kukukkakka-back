@@ -8,11 +8,14 @@ const createUserCart = async (
   quantity,
   totalPrice
 ) => {
-  return await prisma.$queryRaw`
+  return addOptionId.forEach(
+    async (optionId) =>
+      await prisma.$queryRaw`
   INSERT INTO product_carts 
   (user_id, product_id, add_option_id, quantity, totalPrice, order_status) 
   VALUES 
-  (${userId}, ${productId}, ${addOptionId}, ${quantity}, ${totalPrice}, "주문 전")`;
+  (${userId}, ${productId}, ${optionId}, ${quantity}, ${totalPrice}, "주문 전")`
+  );
 };
 
 const getUserCart = async (userId) => {
@@ -36,4 +39,9 @@ const getUserCart = async (userId) => {
   GROUP BY C.product_id, C.user_id, C.quantity, C.totalprice, C.order_status;`;
 };
 
-module.exports = { createUserCart, getUserCart };
+const updateUserCart = async (userId, productId, quantity, totalPrice) => {
+  return await prisma.$queryRaw`
+  UPDATE product_carts SET quantity = ${quantity}, totalprice = ${totalPrice} WHERE product_id = ${productId} AND user_id = ${userId};`;
+};
+
+module.exports = { createUserCart, getUserCart, updateUserCart };

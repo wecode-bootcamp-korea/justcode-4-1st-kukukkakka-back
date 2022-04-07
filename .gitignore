@@ -574,5 +574,4 @@ FodyWeavers.xsd
 
 data/
 .env
-database/data/
 prisma/migrations/

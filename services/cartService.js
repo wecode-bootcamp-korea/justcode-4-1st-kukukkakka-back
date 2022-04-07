@@ -16,7 +16,7 @@ const createCart = async (
       totalPrice
     );
 
-    console.log("create api - 서비스에서 Dao로 주는 파라미터 :", userCart);
+    // console.log("create api - 서비스에서 Dao로 주는 파라미터 :", userCart);
 
     return userCart;
   } catch (err) {
@@ -28,7 +28,7 @@ const getCart = async (userId) => {
   try {
     const userCart = await cartDao.getUserCart(userId);
 
-    console.log("read api - 서비스에서 Dao로 주는 파라미터 :", userCart);
+    // console.log("read api - 서비스에서 Dao로 주는 파라미터 :", userCart);
 
     return userCart;
   } catch (err) {
@@ -36,4 +36,19 @@ const getCart = async (userId) => {
   }
 };
 
-module.exports = { createCart, getCart };
+const updateCart = async (userId, productId, quantity, totalPrice) => {
+  try {
+    const userCart = await cartDao.updateUserCart(
+      userId,
+      productId,
+      quantity,
+      totalPrice
+    );
+
+    return userCart;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { createCart, getCart, updateCart };
