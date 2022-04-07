@@ -31,7 +31,7 @@ const signup = async (email, password, username, policyAgreed, genderId) => {
     throw error;
   }
   const encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync());
-  console.log(encryptedPassword);
+  // console.log(encryptedPassword);
   const createUser = await userDao.createUser(
     email,
     encryptedPassword,
@@ -55,8 +55,18 @@ const login = async (email, password) => {
     error.statusCode = 400;
     throw error;
   }
-  const token = jwt.sign({ userId: user[0].id }, process.env.SECRET_KEY);
+  const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY);
   return token;
 };
 
-module.exports = { signup, login };
+const duplicateCheck = async (email) => {
+  const userCheck = await userDao.checkDuplicateEmail(email);
+  if (userCheck.length !== 0) {
+    const error = new Error("EXSITING_USER");
+    error.statusCode = 400;
+    throw error;
+  }
+  return userCheck;
+};
+
+module.exports = { signup, login, duplicateCheck };

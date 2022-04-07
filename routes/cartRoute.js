@@ -1,12 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const authorizedUser = require("../middlewares/authorization");
+const keyError = require("../middlewares/keyError");
 const cartController = require("../controllers/cartController");
 
 router.use(authorizedUser.getUserIdByVerifyToken);
 
-router.post("", cartController.validCartForm, cartController.createCart);
+router.post("", keyError.validCreateCart, cartController.createCart);
 router.get("", cartController.getCart);
-// router.get("", cartController);
+router.patch("", keyError.validUpdateCart, cartController.updateCart);
+router.delete("", keyError.validDeleteCart, cartController.deleteCart);
+router.patch(
+  "/option",
+  keyError.validAddOptionUpdateCart,
+  cartController.updateAddOption
+);
 
 module.exports = router;

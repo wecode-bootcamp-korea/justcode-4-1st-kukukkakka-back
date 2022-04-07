@@ -1,33 +1,8 @@
-// const res = require("express/lib/response");
 const cartService = require("../services/cartService");
-const jwt = require("jsonwebtoken");
-const res = require("express/lib/response");
-
-const validCartForm = async (req, res, next) => {
-  const { productId, addOptionId, quantity, totalPrice } = req.body;
-
-  console.log(
-    "productId: ",
-    productId,
-    "addOptionId :",
-    addOptionId,
-    "quantity :",
-    quantity,
-    "totalPrice : ",
-    totalPrice
-  );
-
-  if (!productId || !quantity || !addOptionId || !totalPrice) {
-    return res.status(400).json({ message: "KEY_ERROR" });
-  }
-
-  next();
-};
 
 const createCart = async (req, res) => {
   try {
     const userId = req.userId;
-
     const { productId, addOptionId, quantity, totalPrice } = req.body;
 
     const userCart = await cartService.createCart(
@@ -38,9 +13,7 @@ const createCart = async (req, res) => {
       totalPrice
     );
 
-    // console.log("create api - 컨트롤러에서 서비스로 주는 파라미터 :", userCart);
-
-    return res.status(201).json({ message: "ADD TO CART SUCCESS" });
+    return res.status(201).json({ message: "SUCCESS : ADD TO CART" });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ message: err.message });
@@ -50,10 +23,7 @@ const createCart = async (req, res) => {
 const getCart = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log(userId);
     const userCart = await cartService.getCart(userId);
-
-    // console.log("read api - 컨트롤러에서 서비스로 주는 파라미터 :", userCart);
 
     return res.status(201).json({ userCart });
   } catch (err) {
@@ -62,4 +32,62 @@ const getCart = async (req, res) => {
   }
 };
 
-module.exports = { validCartForm, createCart, getCart };
+const updateCart = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { productId, quantity, totalPrice } = req.body;
+
+    const userCart = await cartService.updateCart(
+      userId,
+      productId,
+      quantity,
+      totalPrice
+    );
+
+    return res.status(201).json({ message: "SUCCESS : UPDATE TO CART" });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err.message });
+  }
+};
+
+const deleteCart = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { productId } = req.body;
+
+    const userCart = await cartService.deleteCart(userId, productId);
+
+    return res.status(201).json({ message: "SUCCESS : DELETE A USER CART" });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err.message });
+  }
+};
+
+const updateAddOption = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { productId, addOptionId, totalPrice } = req.body;
+
+    const userCart = await cartService.updateAddOption(
+      userId,
+      productId,
+      addOptionId,
+      totalPrice
+    );
+
+    return res.status(201).json({ message: "SUCCESS : UPDATE ADD OPTION" });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  createCart,
+  getCart,
+  updateCart,
+  deleteCart,
+  updateAddOption,
+};
