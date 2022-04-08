@@ -22,7 +22,8 @@ const createCart = async (
 
 const getCart = async (userId) => {
   try {
-    return await cartDao.getUserCart(userId);
+    const userCart = await cartDao.getUserCart(userId);
+    return userCart;
   } catch (err) {
     console.log(err);
   }

@@ -34,7 +34,7 @@ const getUserCart = async (userId) => {
   C.order_status As orderStatus 
   
   FROM product_carts C 
-  JOIN products P 
+  JOIN products P
   ON P.id = C.product_id 
   JOIN add_options A 
   ON A.id = C.add_option_id
