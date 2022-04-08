@@ -31,7 +31,7 @@ const getUserCart = async (userId) => {
   C.totalprice As totalPrice, 
   json_arrayagg(A.name) As addOptionName, 
   json_arrayagg(A.price) As addOptionPrice, 
-  C.order_status As orderStatus 
+  C.order_status As orderStatus
   
   FROM product_carts C 
   JOIN products P 
