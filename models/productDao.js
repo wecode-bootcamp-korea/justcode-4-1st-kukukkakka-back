@@ -37,11 +37,8 @@ const getDetailList = async (product_id) => {
   LEFT JOIN add_options as ao
   ON pao.add_option_id  = ao.id
   WHERE p.id = ${product_id}
-  GROUP BY p.id
+  GROUP BY p.id`;
 
-
-`;
-  console.log("detail: ", detail[0]);
   return detail;
 };
 
