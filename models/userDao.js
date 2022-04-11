@@ -26,4 +26,9 @@ const checkUser = async (email, password) => {
   `;
 };
 
-module.exports = { checkDuplicateEmail, createUser, checkUser };
+const getUserName = async (userId) => {
+  return await prisma.$queryRaw`
+    SELECT id, username from users where id = ${userId}`;
+};
+
+module.exports = { checkDuplicateEmail, createUser, checkUser, getUserName };

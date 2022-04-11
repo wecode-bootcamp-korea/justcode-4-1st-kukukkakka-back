@@ -85,4 +85,14 @@ const duplicateCheck = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, duplicateCheck };
+const getUserName = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userName = await userService.getUserName(userId);
+    return res.status(201).json({ userName });
+  } catch (err) {
+    res.status(err.statusCode || 500).json({ message: err.message });
+  }
+};
+
+module.exports = { signup, login, duplicateCheck, getUserName };

@@ -8,7 +8,7 @@ const getUserIdByVerifyToken = async (req, res, next) => {
       if (err) {
         res.status(400).json({ message: err.message });
       } else {
-        req.userId = decoded.userId;
+        req.userId = decoded.id;
         next();
       }
     });

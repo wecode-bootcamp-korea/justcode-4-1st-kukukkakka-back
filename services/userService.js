@@ -31,7 +31,6 @@ const signup = async (email, password, username, policyAgreed, genderId) => {
     throw error;
   }
   const encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync());
-  // console.log(encryptedPassword);
   const createUser = await userDao.createUser(
     email,
     encryptedPassword,
@@ -56,6 +55,7 @@ const login = async (email, password) => {
     throw error;
   }
   const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY);
+
   return token;
 };
 
@@ -69,4 +69,8 @@ const duplicateCheck = async (email) => {
   return userCheck;
 };
 
-module.exports = { signup, login, duplicateCheck };
+const getUserName = async (userId) => {
+  return await userDao.getUserName(userId);
+};
+
+module.exports = { signup, login, duplicateCheck, getUserName };
