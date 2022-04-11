@@ -33,15 +33,9 @@ const getCart = async (req, res) => {
 
 const updateCart = async (req, res) => {
   try {
-    const userId = req.userId;
-    const { productId, quantity, totalPrice } = req.body;
+    const { id, quantity, totalPrice } = req.body;
 
-    const userCart = await cartService.updateCart(
-      userId,
-      productId,
-      quantity,
-      totalPrice
-    );
+    const userCart = await cartService.updateCart(id, quantity, totalPrice);
 
     return res.status(201).json({ message: "SUCCESS : UPDATE TO CART" });
   } catch (err) {
@@ -52,10 +46,9 @@ const updateCart = async (req, res) => {
 
 const deleteCart = async (req, res) => {
   try {
-    const userId = req.userId;
-    const { productId } = req.body;
+    const { id } = req.body;
 
-    const userCart = await cartService.deleteCart(userId, productId);
+    const userCart = await cartService.deleteCart(id);
 
     return res.status(201).json({ message: "SUCCESS : DELETE A USER CART" });
   } catch (err) {
@@ -66,15 +59,9 @@ const deleteCart = async (req, res) => {
 
 const updateAddOption = async (req, res) => {
   try {
-    const userId = req.userId;
-    const { productId, addOptionId, totalPrice } = req.body;
+    const { id, totalPrice } = req.body;
 
-    const userCart = await cartService.updateAddOption(
-      userId,
-      productId,
-      addOptionId,
-      totalPrice
-    );
+    const userCart = await cartService.updateAddOption(id, totalPrice);
 
     return res.status(201).json({ message: "SUCCESS : UPDATE ADD OPTION" });
   } catch (err) {

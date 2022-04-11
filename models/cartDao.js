@@ -42,24 +42,19 @@ const getUserCart = async (userId) => {
   GROUP BY C.id, C.product_id, C.user_id, C.quantity, C.totalprice, C.order_status;`;
 };
 
-const updateUserCart = async (userId, productId, quantity, totalPrice) => {
+const updateUserCart = async (id, quantity, totalPrice) => {
   return await prisma.$queryRaw`
-  UPDATE product_carts SET quantity = ${quantity}, totalprice = ${totalPrice} WHERE product_id = ${productId} AND user_id = ${userId};`;
+  UPDATE product_carts SET quantity = ${quantity}, totalprice = ${totalPrice} WHERE id = ${id};`;
 };
 
-const deleteUserCart = async (userId, productId) => {
+const deleteUserCart = async (id) => {
   return await prisma.$queryRaw`
-  DELETE FROM product_carts WHERE product_id = ${productId} AND user_id = ${userId}`;
+  DELETE FROM product_carts WHERE id = ${id};`;
 };
 
-const updateUserAddOption = async (
-  userId,
-  productId,
-  addOptionId,
-  totalPrice
-) => {
+const updateUserAddOption = async (id, totalPrice) => {
   return await prisma.$queryRaw`
-  UPDATE product_carts SET add_option_id = 9, totalprice = ${totalPrice} WHERE product_id = ${productId} AND user_id = ${userId} AND add_option_id = ${addOptionId}`;
+  UPDATE product_carts SET add_option_id = 9, totalprice = ${totalPrice} WHERE id = ${id};`;
 };
 
 module.exports = {
