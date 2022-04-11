@@ -12,7 +12,7 @@ router.patch("", keyError.validUpdateCart, cartController.updateCart);
 router.delete("", keyError.validDeleteCart, cartController.deleteCart);
 router.patch(
   "/option",
-  keyError.validAddOptionUpdateCart,
+  keyError.validAddOptionCart,
   cartController.updateAddOption
 );
 
