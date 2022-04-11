@@ -24,7 +24,6 @@ const getCart = async (req, res) => {
   try {
     const userId = req.userId;
     const userCart = await cartService.getCart(userId);
-
     return res.status(201).json({ userCart });
   } catch (err) {
     console.log(err);
