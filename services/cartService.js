@@ -29,35 +29,25 @@ const getCart = async (userId) => {
   }
 };
 
-const updateCart = async (userId, productId, quantity, totalPrice) => {
+const updateCart = async (id, quantity, totalPrice) => {
   try {
-    return await cartDao.updateUserCart(
-      userId,
-      productId,
-      quantity,
-      totalPrice
-    );
+    return await cartDao.updateUserCart(id, quantity, totalPrice);
   } catch (err) {
     console.log(err);
   }
 };
 
-const deleteCart = async (userId, productId) => {
+const deleteCart = async (id) => {
   try {
-    return await cartDao.deleteUserCart(userId, productId);
+    return await cartDao.deleteUserCart(id);
   } catch (err) {
     console.log(err);
   }
 };
 
-const updateAddOption = async (userId, productId, addOptionId, totalPrice) => {
+const updateAddOption = async (id, totalPrice) => {
   try {
-    return await cartDao.updateUserAddOption(
-      userId,
-      productId,
-      addOptionId,
-      totalPrice
-    );
+    return await cartDao.updateUserAddOption(id, totalPrice);
   } catch (err) {
     console.log(err);
   }

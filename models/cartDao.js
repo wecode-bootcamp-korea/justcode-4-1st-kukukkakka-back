@@ -29,8 +29,13 @@ const getUserCart = async (userId) => {
   P.price As productPrice, 
   C.quantity As productQuantity, 
   C.totalprice As totalPrice, 
-  json_arrayagg(A.name) As addOptionName, 
-  json_arrayagg(A.price) As addOptionPrice, 
+  JSON_ARRAYAGG(
+    JSON_OBJECT(
+      'id', A.id,
+      'name', A.name,
+      'price', A.price
+    )
+  ) AS addOtions,
   C.order_status As orderStatus
   
   FROM product_carts C 
@@ -42,24 +47,22 @@ const getUserCart = async (userId) => {
   GROUP BY C.id, C.product_id, C.user_id, C.quantity, C.totalprice, C.order_status;`;
 };
 
-const updateUserCart = async (userId, productId, quantity, totalPrice) => {
+// json_arrayagg(A.name) As addOptionName,
+// json_arrayagg(A.price) As addOptionPrice,
+
+const updateUserCart = async (id, quantity, totalPrice) => {
   return await prisma.$queryRaw`
-  UPDATE product_carts SET quantity = ${quantity}, totalprice = ${totalPrice} WHERE product_id = ${productId} AND user_id = ${userId};`;
+  UPDATE product_carts SET quantity = ${quantity}, totalprice = ${totalPrice} WHERE id = ${id};`;
 };
 
-const deleteUserCart = async (userId, productId) => {
+const deleteUserCart = async (id) => {
   return await prisma.$queryRaw`
-  DELETE FROM product_carts WHERE product_id = ${productId} AND user_id = ${userId}`;
+  DELETE FROM product_carts WHERE id = ${id};`;
 };
 
-const updateUserAddOption = async (
-  userId,
-  productId,
-  addOptionId,
-  totalPrice
-) => {
+const updateUserAddOption = async (id, totalPrice) => {
   return await prisma.$queryRaw`
-  UPDATE product_carts SET add_option_id = 9, totalprice = ${totalPrice} WHERE product_id = ${productId} AND user_id = ${userId} AND add_option_id = ${addOptionId}`;
+  UPDATE product_carts SET add_option_id = 9, totalprice = ${totalPrice} WHERE id = ${id};`;
 };
 
 module.exports = {
