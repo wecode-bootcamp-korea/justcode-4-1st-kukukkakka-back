@@ -41,7 +41,3 @@ const getDetailList = async (product_id) => {
 };
 
 module.exports = { getProductList, getDetailList };
-
-addOptionId = [1, 2];
-addOptionName = ["꽃병", "플라워박스"];
-addOptionPrice = [29800, 11200];
