@@ -29,8 +29,6 @@ const getDetailList = async (product_id) => {
     )
   ) AS options
   
-
-  
   FROM products as p
   LEFT JOIN product_add_options as pao
   ON p.id = pao.product_id
