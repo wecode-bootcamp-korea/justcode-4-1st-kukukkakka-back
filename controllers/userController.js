@@ -2,55 +2,47 @@ const userService = require("../services/userService");
 
 class userInputError extends Error {
   constructor(key) {
-    console.log("여기까지 오긴 하냐?", key);
     super(key);
     const ErrorMapping = {
-      'email': {
+      email: {
         message: "KEY ERROR : email",
         statusCode: 400,
       },
-      'password': {
+      password: {
         message: "KEY ERROR : password",
         statusCode: 400,
       },
-      'username': {
+      username: {
         message: "KEY ERROR : username",
         statusCode: 400,
       },
-      'genderId': {
+      genderId: {
         message: "KEY ERROR : genderId",
         statusCode: 400,
       },
-      'policyAgreed': {
+      policyAgreed: {
         message: "KEY ERROR : policyAgreed",
         statusCode: 400,
       },
     };
     userInputError.statusCode = ErrorMapping[key].statusCode;
     userInputError.message = ErrorMapping[key].message;
-    throw userInputError
+    throw userInputError;
   }
 }
 
 const signup = async (req, res) => {
   try {
     const { email, password, username, policyAgreed, genderId } = req.body;
-    const REQUIRED_KEYS = { email, password, username, policyAgreed, genderId };   //for 문을 이용하여 정리
+    const REQUIRED_KEYS = { email, password, username, policyAgreed, genderId }; //for 문을 이용하여 정리
     for (const key in REQUIRED_KEYS) {
       if (!REQUIRED_KEYS[key]) {
-        const error = new Error()
+        const error = new Error();
         throw new userInputError(key);
       }
     }
 
-
-    await userService.signup(
-      email,
-      password,
-      username,
-      policyAgreed,
-      genderId
-    );
+    await userService.signup(email, password, username, policyAgreed, genderId);
 
     return res.status(201).json({ message: "SIGNUP_SUCCESS" });
   } catch (err) {
