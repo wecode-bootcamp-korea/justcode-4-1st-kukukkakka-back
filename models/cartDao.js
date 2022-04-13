@@ -32,7 +32,7 @@ const getUserCart = async (userId) => {
   JSON_ARRAYAGG(
     JSON_OBJECT(
       'id', A.id,
-      'name', A.name,
+      'name', A.name, 
       'price', A.price
     )
   ) AS addOtions,

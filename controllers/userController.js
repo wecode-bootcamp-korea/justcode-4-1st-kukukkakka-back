@@ -1,50 +1,51 @@
 const userService = require("../services/userService");
 
+class userInputError extends Error {
+  constructor(key) {
+    super(key);
+    const ErrorMapping = {
+      email: {
+        message: "KEY ERROR : email",
+        statusCode: 400,
+      },
+      password: {
+        message: "KEY ERROR : password",
+        statusCode: 400,
+      },
+      username: {
+        message: "KEY ERROR : username",
+        statusCode: 400,
+      },
+      genderId: {
+        message: "KEY ERROR : genderId",
+        statusCode: 400,
+      },
+      policyAgreed: {
+        message: "KEY ERROR : policyAgreed",
+        statusCode: 400,
+      },
+    };
+    userInputError.statusCode = ErrorMapping[key].statusCode;
+    userInputError.message = ErrorMapping[key].message;
+    throw userInputError;
+  }
+}
+
 const signup = async (req, res) => {
   try {
     const { email, password, username, policyAgreed, genderId } = req.body;
-
-    if (!email) {
-      const error = new Error("KEY ERROR : NO_EMAIL");
-      error.statusCode = 400;
-      throw error;
+    const REQUIRED_KEYS = { email, password, username, policyAgreed, genderId }; //for 문을 이용하여 정리
+    for (const key in REQUIRED_KEYS) {
+      if (!REQUIRED_KEYS[key]) {
+        throw new userInputError(key);
+      }
     }
 
-    if (!password) {
-      const error = new Error("KEY ERROR : NO_PASSWORD");
-      error.statusCode = 400;
-      throw error;
-    }
+    await userService.signup(email, password, username, policyAgreed, genderId);
 
-    if (!username) {
-      const error = new Error("KEY ERROR : NO_USERNAME");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    if (!policyAgreed) {
-      const error = new Error("KEY ERROR : NO_POLICY_AGREED");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    if (!genderId) {
-      const error = new Error("KEY ERROR : NO_GENDER_ID");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    const createUser = await userService.signup(
-      email,
-      password,
-      username,
-      policyAgreed,
-      genderId
-    );
     return res.status(201).json({ message: "SIGNUP_SUCCESS" });
   } catch (err) {
-    console.log(err);
-    res.status(err.statusCode || 500).json({ message: err.message });
+    return res.status(err.statusCode || 500).json({ message: err.message });
   }
 };
 
@@ -95,4 +96,4 @@ const getUserName = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, duplicateCheck, getUserName };
+module.exports = { signup, login, duplicateCheck, getUserName, Error };
