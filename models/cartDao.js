@@ -29,13 +29,8 @@ const getUserCart = async (userId) => {
   P.price As productPrice, 
   C.quantity As productQuantity, 
   C.totalprice As totalPrice, 
-  JSON_ARRAYAGG(
-    JSON_OBJECT(
-      'id', A.id,
-      'name', A.name, 
-      'price', A.price
-    )
-  ) AS addOtions,
+  json_arrayagg(A.name) As addOptionName,
+  json_arrayagg(A.price) As addOptionPrice,
   C.order_status As orderStatus
   
   FROM product_carts C 
@@ -46,9 +41,6 @@ const getUserCart = async (userId) => {
   WHERE C.user_id = ${userId}
   GROUP BY C.id, C.product_id, C.user_id, C.quantity, C.totalprice, C.order_status;`;
 };
-
-// json_arrayagg(A.name) As addOptionName,
-// json_arrayagg(A.price) As addOptionPrice,
 
 const updateUserCart = async (id, quantity, totalPrice) => {
   return await prisma.$queryRaw`
