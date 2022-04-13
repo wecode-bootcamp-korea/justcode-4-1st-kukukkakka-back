@@ -37,7 +37,6 @@ const signup = async (req, res) => {
     const REQUIRED_KEYS = { email, password, username, policyAgreed, genderId }; //for 문을 이용하여 정리
     for (const key in REQUIRED_KEYS) {
       if (!REQUIRED_KEYS[key]) {
-        const error = new Error();
         throw new userInputError(key);
       }
     }
