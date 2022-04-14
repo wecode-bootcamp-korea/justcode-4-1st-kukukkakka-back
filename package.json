@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./server.js",
-    "build": "react-scripts build",
     "distribute": "npm i && prisma generate && pm2 start server.js --name kkukkukkakka-backend -i max"
   },
   "keywords": [],
