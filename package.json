@@ -1,12 +1,12 @@
 {
-  "name": "kkukkukkakka-backend",
+  "name": "kukukkakka-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./server.js",
-    "distribute": "npm i && prisma generate && pm2 start server.js --name kkukkukkakka-backend -i max"
+    "distribute": "npm i && prisma generate && pm2 start server.js --name kukukkakka-backend -i max"
   },
   "keywords": [],
   "author": "",
